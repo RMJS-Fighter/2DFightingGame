@@ -84,6 +84,9 @@ platform.src= './png-objects/long-platform.png'
 let dog = new Image();
 dog.src= './images/dog-r.png'
 
+let cat = new Image();
+cat.src = './images/kitty-r.png'
+
 
 
 /////////////////////////////////////////////////
@@ -97,21 +100,27 @@ canvas.width=1000;
 canvas.height=500;
 
   function paintGame(state){
-    paintStage(state.stage);
-    paintPlayer(state)
+    paintStage(state.floor);
+    paintPlayer(state.player1);
+    paintPlayer(state.player2);
   }
 
 
   function paintStage(stuff){
     //platform
-    ctx.drawImage(platform,-100,canvas.height*0.9,canvas.width*1.2,50);
+    ctx.drawImage(platform, stuff.x, stuff.y, stuff.w, stuff.h);
 
   }
   function paintPlayer(stuff){
       console.log(stuff)
-    ctx.drawImage(dog,stuff.playerOne.sx,stuff.playerOne.sy,
-        stuff.playerOne.sw,stuff.playerOne.sh,
-        canvas.width/2,canvas.height/2,
-        stuff.playerOne.w,stuff.playerOne.h,
+    ctx.drawImage(dog,stuff.sx, stuff.sy, 
+        stuff.sw, stuff.sh, 
+        stuff.x, stuff.y, 
+        stuff.w, stuff.h,
+        )  
+        ctx.drawImage(cat,stuff.sx, stuff.sy, 
+          stuff.sw, stuff.sh, 
+          stuff.x, stuff.y, 
+          stuff.w, stuff.h,
         )  
   }
