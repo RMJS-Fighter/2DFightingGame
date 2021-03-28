@@ -2,7 +2,8 @@ const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-
+const STAGE_WIDTH = 1000
+const STAGE_HEIGHT = 500
 
 
 //Serve necessary files to client
@@ -81,12 +82,37 @@ let superState={
     }
 }
 //Communication with client
+// let dog = new Image()
+// dog.src = './images/dog-r.png'
+// let dogReverse = new Image()
+// dogReverse.src = './images/dog-l.png'
 
 //create game state logic. based gamewindow.js class CanvasDisplay
 class GameState {
     constructor(){
-        this.player1=new Player(       )
-        this.floor=new Barrier(      )
+        this.player1=new Player(id, 30,50, 100, 100, "right")
+        this.floor = new Barrier(
+            -100,
+            STAGE_HEIGHT*0.9,
+            STAGE_WIDTH*1.2,
+            50,
+            floorImg
+          );
+    }
+    sendState(){
+        return {
+           player1: {
+                img:player1.img,
+                sx:player1.sx,
+                sy:player1.sy,
+                sw:player1.sw,
+                sh:player1.sh,
+                x:player1.x,
+                y:player1.y,
+                w:player1.w,
+                h:player1.h
+           }
+        }
     }
 }
 
@@ -108,7 +134,10 @@ class Barrier {
   }
 
   class Player {
-    constructor(x, y, w, h, img, rImg, direction) {
+    constructor(id, x, y, w, h, direction) {
+        this.img = './images/dog-r.png'
+        this.rImg = './images/dog-l.png'
+      this.id = id;
       this.x = x;
       this.y = y;
       this.w = w;
@@ -321,26 +350,41 @@ class Barrier {
     }
   }
 
-  
+  function checkForPlayer2(stuff){
+      console.log(stuff)
+  }
+  function addPlayer(id){
+      connectedPlayers.push(id)
+  }
+
+  let connectedPlayers = []
+
+  function removePlayer(id){
+    let index = connectedPlayers.indexOf(id)
+    connectedPlayers.splice(index, 1)
+  }
 
 io.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
-   
-
-    })    
-
-  socket.on('moveLeft',(e)=>{
-      console.log(e);
-  });
-  socket.on('moveRight',(e)=>{
-    console.log(e);
-    });
-    socket.on('moveUp', (e)=> {
-        console.log(e)
+})  
+    socket.on('disconnect', () =>{
+        removePlayer(socket.id)
     })
-    socket.on('moveBlock', (e)=> {
-        console.log(e)
+// socket.on('connect',()=> {
+    addPlayer(socket.id)
+// })
+socket.on('moveLeft',(e)=>{
+    console.log(e, socket.id);
+  });
+socket.on('moveRight',(e)=>{
+    console.log(e, connectedPlayers);
+    });
+socket.on('moveUp', (e)=> {
+    console.log(e)
+    })
+socket.on('moveBlock', (e)=> {
+    console.log(e)
     })
     // socket.on('attack1', (e)=> {
     //     console.log(e)
@@ -348,8 +392,6 @@ io.on('connection', (socket) => {
     // socket.on('attack2', (e)=> {
     //     console.log(e)
     // })
-
-
 });
 
 
