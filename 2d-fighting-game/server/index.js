@@ -84,11 +84,6 @@ let superState = {
     sh: 50,
   },
 };
-//Communication with client
-// let dog = new Image()
-// dog.src = './images/dog-r.png'
-// let dogReverse = new Image()
-// dogReverse.src = './images/dog-l.png'
 
 //create game state logic. based gamewindow.js class CanvasDisplay
 class GameState {
