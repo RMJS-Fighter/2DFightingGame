@@ -12,6 +12,24 @@ if (input.value) {
 }
 });
 
+//Player controls
+//Send controls
+//Finish controls
+
+window.addEventListener('keydown', function(e){
+  e.preventDefault();
+  if(e.keyCode==100){
+  socket.emit('moveRight',e.keyCode);
+  }
+  if(e.keyCode==65){
+  socket.emit('moveLeft',e.keyCode);
+  }
+});
+
+
+
+
+
 socket.on('chat message', function(msg) {
 var item = document.createElement('li');
 item.textContent = msg;
@@ -55,7 +73,7 @@ dog.src= './images/dog-r.png'
 
 
 
-//////////////////////////
+/////////////////////////
 //Paint game 
 /////////////////////////
 
