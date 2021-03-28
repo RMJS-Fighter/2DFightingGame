@@ -18,12 +18,25 @@ if (input.value) {
 
 window.addEventListener('keydown', function(e){
   e.preventDefault();
-  if(e.keyCode==100){
+  console.log(e.keyCode)
+  if(e.keyCode==68){
   socket.emit('moveRight',e.keyCode);
   }
   if(e.keyCode==65){
   socket.emit('moveLeft',e.keyCode);
   }
+  if(e.keyCode == 87){
+    socket.emit('moveUp', e.keyCode)
+  }
+  if(e.keyCode == 83){
+    socket.emit('moveBlock', e.keyCode)
+  }
+  // if(e.keyCode == 74){
+  //   socket.emit('attack1', e.keyCode)
+  // }
+  // if(e.keyCode == 76){
+  //   socket.emit('attack2',e.keyCode)
+  // }
 });
 
 

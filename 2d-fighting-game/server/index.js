@@ -336,6 +336,18 @@ io.on('connection', (socket) => {
   socket.on('moveRight',(e)=>{
     console.log(e);
     });
+    socket.on('moveUp', (e)=> {
+        console.log(e)
+    })
+    socket.on('moveBlock', (e)=> {
+        console.log(e)
+    })
+    // socket.on('attack1', (e)=> {
+    //     console.log(e)
+    // })
+    // socket.on('attack2', (e)=> {
+    //     console.log(e)
+    // })
 
 
 });
